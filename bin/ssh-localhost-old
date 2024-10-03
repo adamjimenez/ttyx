@@ -1,5 +1,4 @@
 #!/usr/bin/node
-
 "use strict";
 
 const ffi = require('ffi');
@@ -15,13 +14,6 @@ const rl = readline.createInterface({
 
 rl.question('Login: ', (username) => {
     username = username.replace(/[^a-z0-9_]/g, "");
-    rl.close();
-    execvp("/usr/bin/ssh", "-e", "none", username+'@localhost');
-});
-
-
-
-function execvp() {
     var current = ffi.Library(null, 
                               { execvp: ['int', ['string',
                                                  stringAry]],

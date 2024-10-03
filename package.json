@@ -1,7 +1,7 @@
 {
   "name": "ttyx",
   "version": "0.1.0",
-  "description": "replacement for tty.js",
+  "description": "a terminal for the browser (replaces tty.js)",
   "main": "index.js",
   "repository": "git://github.com/risacher/ttyx.git",
   "homepage": "https://github.com/risacher/ttyx",
@@ -28,16 +28,12 @@
   "author": "Dan Risacher, dan@risacher.org",
   "license": "MIT",
   "dependencies": {
+    "css-element-queries": "^1.1.1",
     "express": ">= 4.16.3",
     "express-favicon": "^2.0.0",
-    "ffi": "github:node-ffi/node-ffi",
-    "npm": "^6.5.0",
-    "pty.js": ">= 0.3.1",
-    "ref": ">= 1.3.3",
-    "ref-array": ">= 1.2.0",
-    "ref-struct": "^1.1.0",
-    "socket.io": "^2.2.0",
-    "xterm": "^3.10.0"
+    "node-pty": "^0.10.1",
+    "socket.io": "^4.5.1",
+    "xterm": "^3.14.5"
   },
   "engines": {
     "node": ">= 0.8.0"

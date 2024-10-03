@@ -2,14 +2,14 @@
 
 A terminal in your browser using node.js and socket.io. 
 
-[LIVE DEMO](https://risacher.org/zork/) (currently broken as-of 2019-01-24)
+[LIVE DEMO](https://risacher.org/zork/) (currently working as-of 2019-06-21)
 
-Updated from [chjj/tty.js](https://github.com/chjj/tty.js), ttyx replaces [term.js](https://github.com/chjj/term.js) with [xterm.js](https://github.com/sourcelair/xterm.js), updates [socket.io](https://socket.io) to version 1.x and updates [Express](http://expressjs.com/) to version 4.x.  Ttyx also improves out-of-the-box security by replacing the default application with a wrapper that forces the user to login.  
+An updated fork of [chjj/tty.js](https://github.com/chjj/tty.js), ttyx replaces [term.js](https://github.com/chjj/term.js) with [xterm.js](https://github.com/sourcelair/xterm.js), updates [socket.io](https://socket.io) to version 2.x and updates [Express](http://expressjs.com/) to version 4.x.  Ttyx also improves out-of-the-box security by replacing the default application with a wrapper that forces the user to login.  
 
 Originally Based on Fabrice Bellard's vt100 for [jslinux](http://bellard.org/jslinux/).
 
 For the standalone web terminal, see
-[**xterm.js**](https://github.com/sourcelair/xterm.js).
+[**xterm.js**](https://github.com/xtermjs/xterm.js).
 
 For the lowlevel terminal spawner, see
 [**pty.js**](https://github.com/chjj/pty.js).
@@ -42,6 +42,13 @@ For the lowlevel terminal spawner, see
 ``` bash
 $ npm install ttyx # THIS DOES NOT WORK YET
 ```
+Note: The default application that ttyx runs for each terminal is a script called ssh-localhost.  This script prompts for a username, sanitizes it to be purely alphanumeric, and then exec's ```ssh -e none ${sanitized_username}@localhost```.  It does this because in some current Linux distributions (e.g. Ubuntu), it is not possible to run /bin/login without root permissions.  The down side of this approach is that to be useful, sshd must be configured to allow password authentication, which by-default on modern Linux, it is not.   
+
+In /etc/ssh/sshd_config, on the server, change appropriate line to: 
+```
+PasswordAuthentication yes
+```
+Alternatively, it probably works to set /bin/login to be suid root, and then change the ttyx config to set ```"shell": "/bin/login",```  I assume that Ubuntu does this for good security reasons. 
 
 ## Usage
 
@@ -139,7 +146,7 @@ auth middleware as an option, until it possibly gets something more robust.
 It's ultimately up to you to make sure no one has access to your terminals
 but you.
 
-As an alternative approach (from tty.js), ttyx defaults to running a wrapper 
+Compared to the original tty.js approach, ttyx defaults to running a wrapper 
 called ssh-localhost, that forces a user to login to the server. 
 
 ## CLI
@@ -171,7 +178,7 @@ all code is your original work. `</legalese>`
 
 ## License
 
-    Copyright (c) 2016-2017, Dan Risacher (MIT License)
+    Copyright (c) 2016-2019, Dan Risacher (MIT License)
     Copyright (c) 2012-2014, Christopher Jeffrey (MIT License)
 
 [1]: http://invisible-island.net/xterm/ctlseqs/ctlseqs.html#Mouse%20Tracking
